@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.demo.dao.IUviewDao">
+
+	<insert id="addUview" parameterType="Uview">
+		<![CDATA[
+			insert into uview
+				values(null,#{user_id},#{goods_id})
+		]]>
+	</insert>
+	
+	<delete id="delUview" parameterType="int">
+		<![CDATA[
+			delete from uview where uview_id=#{uview_id}
+		]]>
+	</delete>
+
+	<delete id="delUviews" parameterType="int">
+		<![CDATA[
+			delete from uview where uview_id in 
+		]]>
+		<foreach collection="array" item="uview_ids"  open="(" separator="," close=")">
+			#{uview_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateUview" parameterType="Uview">
+		<![CDATA[
+			UPDATE uview
+		]]>
+		<set>
+			<if test="">
+			<![CDATA[
+				
+			]]>
+			</if>
+		</set>
+		<![CDATA[
+			where uview_id = #{uview_id}
+		]]>
+	</update>
+
+	<select id="getUview" parameterType="Uview" resultType="Uview">
+		<![CDATA[
+			SELECT * FROM uview
+		]]>
+		<where>
+			<if test="uview_id!=0">
+			<![CDATA[
+				uview_id = #{uview_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listUviews" parameterType="Uview" resultType="Uview">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT * FROM uview
+		]]>
+		<where>
+			<if test="uview_id!=0">
+			<![CDATA[
+				uview_id = #{uview_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by uview_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listUviewsCount" parameterType="Uview" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM uview
+		]]>
+		<where>
+			<if test="uview_id!=0">
+			<![CDATA[
+				uview_id = #{uview_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

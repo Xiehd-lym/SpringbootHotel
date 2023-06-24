@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.demo.dao.IOrdersDetailDao">
+
+	<insert id="addOrdersDetail" parameterType="OrdersDetail">
+		<![CDATA[
+			insert into orders_detail
+				values(null,#{orders_no},#{goods_id},#{goods_name},#{goods_price},#{goods_discount},#{goods_count},#{goods_money})
+		]]>
+	</insert>
+
+	<delete id="delOrdersDetail" parameterType="int">
+		<![CDATA[
+			delete from orders_detail where detail_id=#{detail_id}
+		]]>
+	</delete>
+
+	<delete id="delOrdersDetails" parameterType="int">
+		<![CDATA[
+			delete from orders_detail where detail_id in 
+		]]>
+		<foreach collection="array" item="detail_ids"  open="(" separator="," close=")">
+			#{detail_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateOrdersDetail" parameterType="OrdersDetail">
+		<![CDATA[
+			UPDATE orders_detail
+		]]>
+		<set>
+			<if test="">
+			<![CDATA[
+				
+			]]>
+			</if>
+		</set>
+		<![CDATA[
+			where detail_id = #{detail_id}
+		]]>
+	</update>
+
+	<select id="getOrdersDetail" parameterType="OrdersDetail" resultType="OrdersDetail">
+		<![CDATA[
+			SELECT od.*,o.real_name,o.orders_money FROM orders_detail od 
+			  join orders o on od.orders_no=o.orders_no
+		]]>
+		<where>
+			<if test="detail_id!=0">
+			<![CDATA[
+				detail_id = #{detail_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listOrdersDetails" parameterType="OrdersDetail" resultType="OrdersDetail">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT od.*,o.real_name,o.orders_money FROM orders_detail od 
+			  join orders o on od.orders_no=o.orders_no
+		]]>
+		<where>
+			<if test="detail_id!=0">
+			<![CDATA[
+				detail_id = #{detail_id}
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and od.orders_no like '%${orders_no}%'
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by detail_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+	
+	
+	<select id="listOrdersDetailsByOrder" parameterType="Orders" resultType="OrdersDetail">
+			select * FROM orders_detail where orders_no = #{orders_no}
+	</select>
+
+	<select id="listOrdersDetailsCount" parameterType="OrdersDetail" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM orders_detail od 
+			  join orders o on od.orders_no=o.orders_no
+		]]>
+		<where>
+			<if test="detail_id!=0">
+			<![CDATA[
+				detail_id = #{detail_id}
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and od.orders_no like '%${orders_no}%'
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

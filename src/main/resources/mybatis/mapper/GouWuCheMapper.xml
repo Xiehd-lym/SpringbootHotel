@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.demo.dao.IGouWuCheDao">
+
+	<insert id="addGouWuChe" parameterType="GouWuChe">
+		<![CDATA[
+			insert into gouwuche
+				values(null,#{goods_id},#{user_id},#{time},#{count})
+		]]>
+	</insert>
+
+	<delete id="delGouWuChe" parameterType="GouWuChe">
+		<![CDATA[
+			delete from gouwuche 
+		]]>
+		<where>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+	</delete>
+
+	<select id="getGouWuChe" parameterType="GouWuChe"
+		resultType="GouWuChe">
+		<![CDATA[
+			SELECT * FROM gouwuche
+		]]>
+		<where>
+			<if test="id!=0">
+			<![CDATA[
+				id = #{id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listGouWuChesCount" parameterType="GouWuChe"
+		resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM gouwuche
+		]]>
+		<where>
+			<if test="id!=0">
+			<![CDATA[
+				id = #{id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+
+	<select id="listGouWuChes" parameterType="GouWuChe"
+		resultType="GouWuChe">
+		<![CDATA[
+			SELECT * FROM gouwuche
+		]]>
+		<where>
+			<if test="id!=0">
+			<![CDATA[
+				id = #{id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.demo.dao.IDingDanDao">
+
+	<insert id="addDingDan" parameterType="DingDan">
+		<![CDATA[
+			insert into dingdan
+				values(null,#{goods_id},#{user_id},#{time})
+		]]>
+	</insert>
+
+	<delete id="delDingDan" parameterType="DingDan">
+		<![CDATA[
+			delete from dingdan 
+		]]>
+		<where>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+	</delete>
+
+	<select id="getDingDan" parameterType="DingDan"
+		resultType="DingDan">
+		<![CDATA[
+			SELECT * FROM dingdan
+		]]>
+		<where>
+			<if test="id!=0">
+			<![CDATA[
+				id = #{id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listDingDansCount" parameterType="DingDan"
+		resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM dingdan
+		]]>
+		<where>
+			<if test="id!=0">
+			<![CDATA[
+				id = #{id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+	</select>
+	<select id="listDingDans" parameterType="DingDan"
+		resultType="DingDan">
+		<![CDATA[
+			SELECT * FROM dingdan
+		]]>
+		<where>
+			<if test="id!=0">
+			<![CDATA[
+				id = #{id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+	</select>
+</mapper>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.demo.dao.IManagerDao">
+
+	<insert id="addManager" parameterType="Manager">
+		<![CDATA[
+			insert into manager
+				values(null,#{manager_name},#{manager_pass},#{real_name},#{manager_sex},#{manager_mail},#{manager_phone})
+		]]>
+	</insert>
+
+	<delete id="delManager" parameterType="int">
+		<![CDATA[
+			delete from manager where manager_id=#{manager_id}
+		]]>
+	</delete>
+
+	<delete id="delManagers" parameterType="int">
+		<![CDATA[
+			delete from manager where manager_id in 
+		]]>
+		<foreach collection="array" item="manager_ids"  open="(" separator="," close=")">
+			#{manager_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateManager" parameterType="Manager">
+		<![CDATA[
+			UPDATE manager
+		]]>
+		<set>
+			<if test="manager_pass!=null and manager_pass!=''">
+			<![CDATA[
+				manager_pass = #{manager_pass},
+			]]>
+			</if>
+			<if test="real_name!=null and real_name!=''">
+			<![CDATA[
+				real_name = #{real_name},
+			]]>
+			</if>
+			<if test="manager_sex!=0">
+			<![CDATA[
+				manager_sex = #{manager_sex},
+			]]>
+			</if>
+			<if test="manager_mail!=null and manager_mail!=''">
+			<![CDATA[
+				manager_mail = #{manager_mail},
+			]]>
+			</if>
+			<if test="manager_phone!=null and manager_phone!=''">
+			<![CDATA[
+				manager_phone = #{manager_phone}
+			]]>
+			</if>
+		</set>
+		<![CDATA[
+			where manager_id = #{manager_id}
+		]]>
+	</update>
+
+	<select id="getManager" parameterType="Manager" resultType="Manager">
+		<![CDATA[
+			SELECT * FROM manager
+		]]>
+		<where>
+			<if test="manager_id!=0">
+			<![CDATA[
+				manager_id = #{manager_id}
+			]]>
+			</if>
+			<if test="manager_name!=null and manager_name!=''">
+			<![CDATA[
+				and manager_name = #{manager_name}
+			]]>
+			</if>
+			<if test="manager_pass!=null and manager_pass!=''">
+			<![CDATA[
+				and manager_pass = #{manager_pass}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listManagers" parameterType="Manager" resultType="Manager">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT * FROM manager
+		]]>
+		<where>
+			<if test="manager_id!=0">
+			<![CDATA[
+				manager_id = #{manager_id}
+			]]>
+			</if>
+			<if test="manager_name!=null and manager_name!=''">
+			<![CDATA[
+				and manager_name like '%${manager_name}%'
+			]]>
+			</if>
+			<if test="real_name!=null and real_name!=''">
+			<![CDATA[
+				and real_name like '%${real_name}%'
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by manager_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listManagersCount" parameterType="Manager" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM manager
+		]]>
+		<where>
+			<if test="manager_id!=0">
+			<![CDATA[
+				manager_id = #{manager_id}
+			]]>
+			</if>
+			<if test="manager_name!=null and manager_name!=''">
+			<![CDATA[
+				and manager_name like '%${manager_name}%'
+			]]>
+			</if>
+			<if test="real_name!=null and real_name!=''">
+			<![CDATA[
+				and real_name like '%${real_name}%'
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>
